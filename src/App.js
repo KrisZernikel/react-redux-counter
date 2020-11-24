@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import { connect } from 'react-redux'
+import { INCREMENT, DECREMENT } from './actions/actionTypes'
 import './App.css';
 
-function App() {
+function App(props) {
+  const { dispatch } = props
+  const handleIncrement = () => {
+    dispatch({ type: INCREMENT })
+  }
+  const handleDecrement = () => {
+    dispatch({ type: DECREMENT })
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Count</h1>
+      <p>{props.count}</p>
+      <button onClick={handleIncrement}>INCREMENT</button>
+      <button onClick={handleDecrement}>DECREMENT</button>
     </div>
   );
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    count: state.counter.count
+  }
+}
+
+export default connect(mapStateToProps)(App);
